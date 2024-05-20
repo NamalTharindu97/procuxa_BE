@@ -3,36 +3,69 @@ const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-//@descPOST  register a user
-//@Route GET api/users/register
+//@desc POST register a user
+//@Route POST api/users/register
 //@access public
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
+  const {
+    username,
+    email,
+    password,
+    companyName,
+    phoneNumber,
+    address,
+    city,
+    website,
+    interestCategories,
+    firstName,
+    lastName,
+    designation,
+    mobileNumber,
+    alternativeEmail,
+  } = req.body;
+
   if (!username || !email || !password) {
     res.status(400);
-    throw new Error('all fields are mandatory');
+    throw new Error('All fields are mandatory');
   }
+
   const userAvailable = await User.findOne({ email });
   if (userAvailable) {
     res.status(400);
-    throw new Error('user already registered');
+    throw new Error('User already registered');
   }
+
   const hashPassword = await bcrypt.hash(password, 10);
-  console.log('hash Password :', hashPassword);
+
   const user = await User.create({
     username,
     email,
     password: hashPassword,
     isAdmin: false,
+    // Additional fields
+    companyName,
+    phoneNumber,
+    address,
+    city,
+    website,
+    interestCategories,
+    firstName,
+    lastName,
+    designation,
+    mobileNumber,
+    alternativeEmail,
   });
-  console.log(`${user}`);
+
   if (user) {
-    res
-      .status(201)
-      .json({ _id: user.id, email: user.email, isAdmin: user.isAdmin });
+    res.status(201).json({
+      _id: user.id,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      // Return additional fields if needed
+    });
   } else {
     res.status(400);
-    throw new Error('user data is not valid');
+    throw new Error('User data is not valid');
   }
 });
 
