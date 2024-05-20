@@ -20,6 +20,7 @@ app.use("/api/contacts", require("./routes/contactRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/tender-notices", require("./routes/tenderNoticeRoute")); // Mount the tender notice routes
 app.use("/api/mail", require("./routes/mailRoute")); // Mount the tender notice routes
+app.use("/api/tenderApply", require("./routes/tenderApplyRoutes")); // Mount the tender notice routes
 app.use(errorHandler);
 
 app.listen(PORT, () => {
