@@ -17,23 +17,25 @@ const getLabel = (list, value) => {
 // POST : http://localhost:5000/quote/add
 const addQuote = async (req, res) => {
 	try {
-		const quoteDetails = {
-			Payment_Method: getLabel(Payment_Method, req.body.Payment_Method),
-			VendorID: getLabel(VendorID, req.body.VendorID),
-			Department: getLabel(Department, req.body.Department),
-			PaymentTerms: getLabel(PaymentTerms, req.body.PaymentTerms),
-			ContractType: getLabel(ContractTypes, req.body.ContractType),
-			ContractValue: req.body.ContractValue, // Assuming this is a direct value
-		};
+		console.log(req.body);
 
-		const newQuote = new Quotation({
-			Payment_Method: req.body.Payment_Method,
-			VendorID: req.body.VendorID,
-			Department: req.body.Department,
-			ContractValue: req.body.ContractValue,
-			PaymentTerms: req.body.PaymentTerms,
-			ContractType: req.body.ContractType,
-		});
+		const quoteDetails = {
+			Payment_Method: getLabel(
+				Payment_Method,
+				parseInt(req.body.Payment_Method, 10)
+			),
+			VendorID: getLabel(VendorID, parseInt(req.body.VendorID, 10)),
+			Department: getLabel(Department, parseInt(req.body.Department, 10)),
+			PaymentTerms: getLabel(
+				PaymentTerms,
+				parseInt(req.body.PaymentTerms, 10)
+			),
+			ContractType: getLabel(
+				ContractTypes,
+				parseInt(req.body.ContractType, 10)
+			),
+			ContractValue: parseInt(req.body.ContractValue, 10), // Assuming this is a direct value
+		};
 
 		// Send email to the customer
 		const transporter = nodemailer.createTransport({
