@@ -19,6 +19,18 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    // Additional fields
+    companyName: String,
+    phoneNumber: String,
+    address: String,
+    city: String,
+    website: String,
+    interestCategories: [String],
+    firstName: String,
+    lastName: String,
+    designation: String,
+    mobileNumber: String,
+    alternativeEmail: String,
   },
   {
     timestamps: true,
