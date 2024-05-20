@@ -68,6 +68,14 @@ const loginUser = asyncHandler(async (req, res) => {
   res.json({ message: 'login user' });
 });
 
+// @desc GET all users
+// @Route GET api/users
+// @access private
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({}).select('-password');
+  res.status(200).json(users);
+});
+
 //@desc GET current users
 //@Route POST api/users/current
 //@access public
@@ -75,4 +83,4 @@ const currentUser = asyncHandler(async (req, res) => {
   res.json(req.user);
 });
 
-module.exports = { registerUser, loginUser, currentUser };
+module.exports = { registerUser, loginUser, currentUser, getAllUsers };
